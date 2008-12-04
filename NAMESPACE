@@ -1,0 +1,9 @@
+useDynLib(bayesclust)
+export(cluster.optimal, cluster.test, emp2pval,
+fdr.test, nulldensity)
+S3method(hist, nulldensity)
+S3method(plot, cluster.optimal)
+S3method(plot, cluster.test)
+S3method(print, emp2pval)
+S3method(summary,cluster.test)
+S3method(print, summary.cluster.test)
