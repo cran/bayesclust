@@ -52,6 +52,8 @@ cluster.optimal <- function(data, nsim=1000, aR=0.4, p=2, k=2, a=2.01, b=0.99009
   4, 1, 3, 2,
   4, 1, 2, 3), nrow=24, byrow=TRUE)
   perm <- list(perm2,perm3,perm4)
+  lfact <- lfactorial(1:10)
+  lfact.n <- lfactorial(n)
 
 #**************************************************************************
   gdraw<-function(k) {
@@ -121,12 +123,16 @@ else
    Clustnew <- getRW(cind)
    MVnew<-GroupMH(Clustnew, k)
   }
+  counts.old <- as.vector(table(cind))
+  n.old <- sum(counts.old[counts.old>m])
+  counts.new <- as.vector(table(Clustnew))
+  n.new <- sum(counts.new[counts.new>m])
   lgnew <-lfact[k]-lchoose((n-(m*k)+k-1),k-1)-lfact.n +sum(lfactorial(MVnew[[3]]))
   lgold <-lfact[k]-lchoose((n-(m*k)+k-1),k-1)-lfact.n +sum(lfactorial(table(cind)))
 #  MHR<-lgnew-lgold+log(Const + (1-aR)*exp(lgold))-log(Const + (1-aR)*exp(lgnew))
   logmarg1.new <- margM(MVnew)
-  MHR <- logmarg1.new * (Const + (1 - aR)*exp(lgnew))^(-1) * (Const + (1 - aR)*exp(lgold)) * logmarg1.old^(-1)
-  MHR <- min(1,MHR)
+  MHR <- logmarg1.new - log(Const/n.old + (1 - aR)*exp(lgnew)) + log(Const/n.new + (1 - aR)*exp(lgold)) - logmarg1.old
+  MHR <- min(1,exp(MHR))
   if(runif(1)<MHR) return(list(Clustnew,logmarg1.new))
     else return(list(cind,logmarg1.old))
 }
@@ -205,32 +211,46 @@ return(cluster.table)
     MV1 <- GroupMH(Clust, k)
     logmarg1 <- margM(MV1)
 
-    Const<-aR/(n*(k-1))
+    #Const<-aR/(n*(k-1))
+    Const<-aR/(k-1)
 
   if (keep>1) {
     Clusters <- array(0,dim=c(keep,n+1)) 
     Clusters[1,] <- c(Clust, logmarg1)
 
-  lfact <- lfactorial(1:10)
-  lfact.n <- lfactorial(n)
 
 # populate the table with the first 'keep' clusters, making sure there are no duplicates 
     for(j in 2:keep) {
       temp <- getNew(Clust,logmarg1,Const)
-      dup <- FALSE
-      for(i in 1:(j-1)) {
-        if (sum(Clusters[i,1:n]==temp[[1]])==n) {
-          dup <- TRUE
-          break
+      dup <- TRUE
+      while(dup==TRUE) {
+        foundDUP <- 0
+        for(i in 1:(j-1)) {
+              if (sum(Clusters[i,1:n]==temp[[1]])==n) {
+                foundDUP <- foundDUP + 1
+                break
+              }
         }
-      }
+              if(foundDUP>0) {
+	        temp <- getNew(Clust, logmarg1, Const)
+              }
       # 'dup==FALSE' means that it is a new clustering/partition
       # 'dup==TRUE' means there is a duplicate clustering/partition already in the table
-      if(dup==FALSE) 
-        Clusters[j,] <- c(temp[[1]], temp[[2]])
-      Clust <- temp[[1]]
-      logmarg1 <- temp[[2]]
-    }
+              else {
+                dup <- FALSE
+                Clusters[j, ] <- c(temp[[1]], temp[[2]])
+              }
+            }
+            Clust <- temp[[1]]
+            logmarg1 <- temp[[2]]
+        }
+
+
+
+
+
+
+
 
 # Store the minimum m(Y|w_k) and the lowest/smallest index at which it occurs
 # Hence (*) will take the lowest/smallest index with the minimium logmarg1 value
