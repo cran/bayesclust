@@ -3,7 +3,7 @@
 \title{ Search for Optimal Clustering of Dataset }
 \description{
   \code{cluster.optimal} will search for the optimal
-\eqn{k}-clustering of the dataset, where \eqn{k=2,3} or \eqn{4}.
+\eqn{k}-clustering of the dataset.
 }
 \usage{
 cluster.optimal(data, nsim = 1000, aR = 0.4, p = 2, k = 2,
@@ -25,7 +25,7 @@ percentage of time that the random walk is chosen. Please see the references
 below for further details on the density \code{g}.  }
   \item{p}{ The observations are assumed to come from a multivariate normal
 distribution, of length \code{p}. }
-  \item{k}{ \code{k} must take the value 2, 3 or 4 and no other. It instructs the algorithm
+  \item{k}{ \code{k} must take an integer value strictly greater than 1. It instructs the algorithm
 to search for the optimal partition of the data into \code{k} clusters.}
   \item{a}{ \code{a} is a hyperparameter for the prior on \eqn{\sigma^2}.
 Further details can be found in the references below. }

@@ -17,8 +17,7 @@ nulldensity <- function(nsim, n, k, mcs=0.2, a=2.01, b=0.990099,
 	tau2=1, prop=0.25, p, file=""){
 
 # Check arguments here ****************************************************
-	if((k>=5)||(k<2)) stop("k can only take values 2, 3 or 4")
-	if(mcs>=1) stop("mcs has to be a fraction between 0 and 1")
+	if((mcs>=1)||(mcs >= 1/k)) stop("mcs has to be a fraction between 0 and 1/k")
 	if((a<=0)||(b<=0)||(tau2<=0)) stop("a, b and tau2 have to be non-negative")
 	sig2=rep(1,p) 
 #	if((length(sig2)!=p)||(min(sig2)<=0)) 
@@ -111,7 +110,6 @@ bayesfactor.sampledM <- function(n, obs, k, m, a, b, sig2, tau2, sample.num, p) 
 	}
 #**************************************************************************
 
-#	set.seed(1)
 	Y <- matrix(0, p*nsim, n)
 	  for(i in 1:(p*nsim)) Y[i,] <- rchisq(n,1)
 	

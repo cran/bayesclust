@@ -6,8 +6,7 @@ cluster.optimal <- function(data, nsim=1000, aR=0.4, p=2, k=2, a=2.01, b=0.99009
 		mcs=0.2, file="", label="data") {
 
 # Check arguments here ****************************************************
-	if((k>=5)||(k<2)) stop("k can only take values 2, 3 or 4")
-	if(mcs>=1) stop("mcs has to be a fraction between 0 and 1")
+	if((mcs>=1)||(mcs >= 1/k)) stop("mcs has to be a fraction between 0 and 1/k")
 	if((a<=0)||(b<=0)||(tau2<=0)) stop("a, b and tau2 have to be non-negative")
 	if(length(dim(data))!=2)
 		stop("data has to be a 2D data array")
@@ -52,7 +51,7 @@ cluster.optimal <- function(data, nsim=1000, aR=0.4, p=2, k=2, a=2.01, b=0.99009
   4, 1, 3, 2,
   4, 1, 2, 3), nrow=24, byrow=TRUE)
   perm <- list(perm2,perm3,perm4)
-  lfact <- lfactorial(1:10)
+  lfact.k <- lfactorial(k)
   lfact.n <- lfactorial(n)
 
 #**************************************************************************
@@ -73,7 +72,7 @@ GroupMH <- function(cind, k) {
 #**************************************************************************
 means <- vector(mode="numeric", length=k*p)
 variances <- vector(mode="numeric", length=k*p)
-counts <- rep(0,4)
+counts <- rep(0,k)
 tmp <- .C("GroupMH", as.single(Y), as.integer(cind),as.integer(k), as.integer(p), 
 	as.integer(length(cind)), as.single(means), as.single(variances), as.integer(counts), PACKAGE="bayesclust")
 return(list(matrix(tmp[[6]], nrow=p, byrow=TRUE), matrix(tmp[[7]], nrow=p, byrow=TRUE), tmp[[8]][1:k]))
@@ -127,8 +126,8 @@ else
   n.old <- sum(counts.old[counts.old>m])
   counts.new <- as.vector(table(Clustnew))
   n.new <- sum(counts.new[counts.new>m])
-  lgnew <-lfact[k]-lchoose((n-(m*k)+k-1),k-1)-lfact.n +sum(lfactorial(MVnew[[3]]))
-  lgold <-lfact[k]-lchoose((n-(m*k)+k-1),k-1)-lfact.n +sum(lfactorial(table(cind)))
+  lgnew <-lfact.k-lchoose((n-(m*k)+k-1),k-1)-lfact.n +sum(lfactorial(MVnew[[3]]))
+  lgold <-lfact.k-lchoose((n-(m*k)+k-1),k-1)-lfact.n +sum(lfactorial(table(cind)))
 #  MHR<-lgnew-lgold+log(Const + (1-aR)*exp(lgold))-log(Const + (1-aR)*exp(lgnew))
   logmarg1.new <- margM(MVnew)
   MHR <- logmarg1.new - log(Const/n.old + (1 - aR)*exp(lgnew)) + log(Const/n.new + (1 - aR)*exp(lgold)) - logmarg1.old
@@ -158,31 +157,31 @@ return(cluster)
 #**************************************************************************
 
 #**************************************************************************
-cluster_relabel <- function(cluster.table, k) {
+#cluster_relabel <- function(cluster.table, k) {
 #**************************************************************************
-top.clust <- cluster.table[1,1:n]
-index <- array(TRUE, dim=c(n,k))
-
-for (m in 2:keep) {
-  tmp <- cluster.table[m,1:n]
-  for (r in 1:k) {
-    index[,r] <- tmp==r
-  }
-
-  max.cor <- -1 
-  for (r in 1:gamma(k+1)) {
-    for (t in 1:k) {
-      tmp[index[,t]] <- perm[[k-1]][r,t] 
-    }
-    if (cor(top.clust,tmp) > max.cor) {
-      max.cor <- cor(top.clust, tmp)
-      cluster.table[m,1:n] <- tmp
-    }
-  }
-
-}
-return(cluster.table)
-}
+#top.clust <- cluster.table[1,1:n]
+#index <- array(TRUE, dim=c(n,k))
+#
+#for (m in 2:keep) {
+#  tmp <- cluster.table[m,1:n]
+#  for (r in 1:k) {
+#    index[,r] <- tmp==r
+#  }
+#
+#  max.cor <- -1 
+#  for (r in 1:gamma(k+1)) {
+#    for (t in 1:k) {
+#      tmp[index[,t]] <- perm[[k-1]][r,t] 
+#    }
+#    if (cor(top.clust,tmp) > max.cor) {
+#      max.cor <- cor(top.clust, tmp)
+#      cluster.table[m,1:n] <- tmp
+#    }
+#  }
+#
+#}
+#return(cluster.table)
+#}
 #**************************************************************************
 
   parameters <- list(n=n, k=k, min.clust.size=m, a=a, b=b, tau2=tau2, p=p, 
@@ -245,13 +244,6 @@ return(cluster.table)
             logmarg1 <- temp[[2]]
         }
 
-
-
-
-
-
-
-
 # Store the minimum m(Y|w_k) and the lowest/smallest index at which it occurs
 # Hence (*) will take the lowest/smallest index with the minimium logmarg1 value
     min.logmarg1 <- min(Clusters[,n+1])
@@ -291,7 +283,7 @@ return(cluster.table)
     }
 
    sort.idx <- sort(Clusters[,n+1], index=TRUE, decreasing=TRUE)$ix
-   tmp2 <- cluster_relabel(Clusters[sort.idx,],k)
+   tmp2 <- Clusters[sort.idx,]
    Allclust <- list(clusters=tmp2[,1:n], logmarg=tmp2[,n+1])
   }
 # end of if(keep>1) loop

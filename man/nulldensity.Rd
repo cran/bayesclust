@@ -2,7 +2,7 @@
 \alias{nulldensity}
 \title{ Generate Null Distribution of Empirical Posterior Probability }
 \description{
-In testing the following the hypothesis with \eqn{k = 2, 3} or \eqn{4},
+In testing the following the hypothesis,
 \tabular{l}{
 \eqn{H_0} : No clusters \cr
 \eqn{H_1} : \eqn{k} clusters \cr
@@ -22,7 +22,7 @@ Otherwise 8,000-10,000 iterations will suffice.}
   \item{n}{ \code{n} is the number of observations in the dataset for
 testing this hypothesis. See \code{\link{cluster.test}} for more details. }
   \item{k}{ \code{k} specifies the alternative hypothesis being tested. It
-must take the value of 2, 3 or 4. }
+must take an integer value strictly greater than 1. }
   \item{mcs}{ \code{mcs} stands for Minimum Cluster Size. It should be a value between 0
 and 1. It instructs the test procedure to only consider clusters of a certain minimum
 size. }
@@ -49,8 +49,8 @@ the calculated statistic. This package achieves this task by simulating the null
 of the test statistic with \code{nulldensity} and then extracting the sample quantile using
 \code{emp2pval}.
 
-A very small portion of the code has been written in C. The code is slowest when the
-alternative hypothesis has k = 4.
+A very small portion of the code has been written in C. The code becomes slower as
+\code{k} gets larger in the alternative hypothesis.
 
 For a particular dataset, this function can be run in parallel with \code{cluster.test}.
 }

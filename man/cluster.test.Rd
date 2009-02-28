@@ -8,7 +8,7 @@ null hypothesis in the following test:
 \eqn{H_0} : No clusters \cr 
 \eqn{H_1} : \eqn{k} clusters \cr
 }
-where \eqn{k} takes the value 2,3 or 4. 
+where \eqn{k} takes an integer value strictly greater than 1. 
 }
 \usage{
 cluster.test(data, nsim = 1000, aR = 0.4, p = 2, k = 2, 
@@ -29,7 +29,7 @@ between 0 and 1, specifies the percentage of time that the random walk is chosen
 Please see the references below for further details on \eqn{g}.}
   \item{p}{ The observations are assumed to come from a multivariate normal
 distribution, of length \code{p}. }
-  \item{k}{ \code{k} must take the value 2, 3 or 4 and no other. It specifies
+  \item{k}{\code{k} must take an integer value strictly greater than 1. It specifies
 the alternative hypothesis in the test. }
   \item{a}{ \code{a} is a hyperparameter for the prior on \eqn{\sigma^2}.
 Further details can be found in the references below. }

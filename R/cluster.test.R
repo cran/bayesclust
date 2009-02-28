@@ -6,8 +6,7 @@ cluster.test <- function(data, nsim=1000, aR=0.4, p=2, k=2, a=2.01, b=0.990099, 
 		mcs=0.2, file="", label="data") {
 
 # Check arguments here ****************************************************
-	if((k>=5)||(k<2)) stop("k can only take values 2, 3 or 4")
-	if(mcs>=1) stop("mcs has to be a fraction between 0 and 1")
+	if((mcs>=1)||(mcs >= 1/k)) stop("mcs has to be a fraction between 0 and 1/k")
 	if((a<=0)||(b<=0)||(tau2<=0)) stop("a, b and tau2 have to be non-negative")
 	if(length(dim(data))!=2)
 		stop("data has to be in the form of a 2D data array")
@@ -35,7 +34,7 @@ GroupMH <- function(cind, k) {
 #**************************************************************************
 means <- vector(mode="numeric", length=k*p)
 variances <- vector(mode="numeric", length=k*p)
-counts <- rep(0,4)
+counts <- rep(0,k)
 tmp <- .C("GroupMH", as.single(Y), as.integer(cind),as.integer(k), as.integer(p), 
 	as.integer(length(cind)), as.single(means), as.single(variances), as.integer(counts), PACKAGE="bayesclust")
 return(list(matrix(tmp[[6]], nrow=p, byrow=TRUE), matrix(tmp[[7]], nrow=p, byrow=TRUE), tmp[[8]][1:k]))
@@ -90,7 +89,7 @@ else
   n.old <- sum(counts.old[counts.old>m])
   counts.new <- as.vector(table(Clustnew))
   n.new <- sum(counts.new[counts.new>m])
-  lgnew<-lfact[k]-lchoose((n-(m*k)+k-1),k-1)-lfact.n +sum(lfactorial(MVnew[[3]]))
+  lgnew<-lfact.k-lchoose((n-(m*k)+k-1),k-1)-lfact.n +sum(lfactorial(MVnew[[3]]))
   MHR<-lgnew-lgold+log(Const/n.new + (1-aR)*exp(lgold))-log(Const/n.old + (1-aR)*exp(lgnew))
   MHR<-min(1,exp(MHR))
   if(runif(1)<MHR) return(list(Clustnew,lgnew,MVnew))
@@ -109,7 +108,7 @@ else
   preConst <- p*a*log(2/b)-p*lgamma(a) 					# put this outside the k in 2:4 loop
   logmarg0 <- p*lgamma(n/2 + a)-(p/2)*log(n*tau2+1) - (n/2 + a)*sum(log(n*diag(var(Y))+ 2/b))
   T1 <- vector("numeric", nsim)
-  lfact <- lfactorial(1:10)
+  lfact.k <- lfactorial(k)
   lfact.n <- lfactorial(n)
 
     logConst <- (k-1) * preConst          
@@ -122,7 +121,7 @@ else
 
 #    Const<-aR/(n*(k-1))
     Const<-aR/(k-1)
-    log.g<-lfact[k]-lchoose((n-(m*k)+k-1),k-1)-lfact.n +sum(lfactorial(Clust))
+    log.g<-lfact.k-lchoose((n-(m*k)+k-1),k-1)-lfact.n +sum(lfactorial(Clust))
     
     for(j in 2:nsim) {
       temp <- getNew(Clust, MV1, Const, log.g)

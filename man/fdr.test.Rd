@@ -16,11 +16,10 @@ of objects of class ``emp2pval''. Objects of this class are returned by the func
 that the experimenter is willing to tolerate.}
 }
 \details{
-  This function implements a conservative version of the FDR controlling procedure
-depicted in Benjamini and Hochberg (1995). Instead of finding the \emph{largest} \eqn{i} such
-that \eqn{P_{(i)} \leq (i/m) * q }{P_{(i)} <= (i/m) * q }, this routine will look for
-the \emph{first} time that the FDR sequence is larger than the corresponding ordered
-\eqn{p}-value. Please refer to the original paper for the notation and details.
+  This function implements the FDR controlling procedure
+described in Benjamini and Hochberg (1995). This routine will look for the \emph{largest} \eqn{i} such
+that \eqn{P_{(i)} \leq (i/m) * q }{P_{(i)} <= (i/m) * q }.
+Please refer to the original paper for the notation and details.
 }
 \value{
   The output simply lists the datasets for which significant clusters were found.

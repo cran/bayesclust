@@ -25,15 +25,14 @@ fdr.test <- function(namelist, q=0.05) {
   consol <- data.frame(labels, k, emp.probs=round(emp.pvals[,1],4), pvalues=round(emp.pvals[,2],4))
   
   ord.ind <- order(consol$pvalues)
-  tmp <- which(sort(consol$pvalues)>fdr.seq)
+  tmp <- which(sort(consol$pvalues)<=fdr.seq)
   if(length(tmp)==0) {
-    cat("All the hypotheses are significant when controlling FDR at level alpha = ", q ,"\n")
+      cat("None of the hypothesis are significant when controlling FDR at level alpha = ", q ,"\n")
   }
   else {
-  sig.hyp <- min(which(sort(consol$pvalues)>fdr.seq)) - 1
-
-    if(sig.hyp==0) {
-      cat("None of the hypothesis are significant when controlling FDR at level alpha = ", q ,"\n")
+  sig.hyp <- max(which(sort(consol$pvalues)<=fdr.seq))
+    if(sig.hyp==len.namelist) {
+      cat("All the hypotheses are significant when controlling FDR at level alpha = ", q ,"\n")
     }
     else {
       cat("Significant clusters were found in the following datasets when controlling FDR at level alpha = ", q ,"\n")

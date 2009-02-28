@@ -71,5 +71,3 @@ Maintainer: Vik Gopal <viknesh@stat.ufl.edu>
  \code{\link{cluster.test}}, \code{\link{cluster.optimal}}, \code{\link{emp2pval}}, 
  \code{\link{nulldensity}}, \code{\link{fdr.test}}
 }
-\examples{
-}
