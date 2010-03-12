@@ -13,11 +13,8 @@
   \item{\dots}{ Additional arguments to be passed to the \code{hist} method. }
 }
 \references{ 
-  Fuentes, C. and Casella, G. (2008) "Testing for the Existence of Clusters"
-  \url{http://www.stat.ufl.edu/~casella/Papers/paper-v3.pdf}
-
-  Gopal, V. "BayesClust User Manual"
-  \url{http://www.stat.ufl.edu/~viknesh/bayesclust/clust.html}
+  Fuentes, C. and Casella, G. (2009) Testing for the Existence of Clusters. 
+  \emph{SORT} \bold{33}(2)
 }
 \author{ Gopal, V. }
 \seealso{ \code{\link{nulldensity}} for further information on 

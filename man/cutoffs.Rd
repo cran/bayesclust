@@ -30,11 +30,8 @@
   to his/her particular set-up.
 }
 \references{ 
-  Fuentes, C. and Casella, G. (2008) "Testing for the Existence of Clusters"
-  \url{http://www.stat.ufl.edu/~casella/Papers/paper-v3.pdf}
-
-  Gopal, V. "BayesClust User Manual"
-  \url{http://www.stat.ufl.edu/~viknesh/bayesclust/clust.html}
+  Fuentes, C. and Casella, G. (2009) Testing for the Existence of Clusters. 
+  \emph{SORT} \bold{33}(2)
 }
 \examples{
 data(cutoffs)

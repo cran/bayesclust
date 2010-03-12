@@ -36,9 +36,6 @@ Estimate the \eqn{p}-value of the EPP for this dataset
 using \code{emp2pval}. This function takes the objects returned in 
 Steps 1 and 3 as input.
 \item
-If multiple hypotheses are being tested, check to see which are significant,
-whilst controlling for FDR, by applying \code{fdr.test} to the objects returned in Step 4.
-\item
 Run \code{cluster.optimal} on significant datasets to pick out optimal clusters.
 \item
 Run \code{plot} on the object returned in Step 6 to view the optimal clustering/partition of the 
@@ -56,18 +53,15 @@ and Vik Gopal \email{viknesh@stat.ufl.edu}
 Maintainer: Vik Gopal <viknesh@stat.ufl.edu>
 }
 \references{
-  Fuentes, C. and Casella, G. (2008) "Testing for the Existence of Clusters"
-  \url{http://www.stat.ufl.edu/~casella/Papers/paper-v3.pdf}
+  Fuentes, C. and Casella, G. (2009) Testing for the Existence of Clusters. 
+  \emph{SORT} \bold{33}(2)
 
-  Gopal, V. "BayesClust User Manual"
-  \url{http://www.stat.ufl.edu/~viknesh/bayesclust/clust.html}
-  
 }
 \keyword{ package }
 \keyword{ htest }
 \keyword{ multivariate }
 \keyword{ cluster }
 \seealso{
- \code{\link{cluster.test}}, \code{\link{cluster.optimal}}, \code{\link{emp2pval}}, 
- \code{\link{nulldensity}}, \code{\link{fdr.test}}
+ \code{\link{cluster.test}}, \code{\link{cluster.optimal}}, 
+ \code{\link{emp2pval}}, \code{\link{nulldensity}} 
 }

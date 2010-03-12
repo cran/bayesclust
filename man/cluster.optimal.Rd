@@ -6,9 +6,9 @@
 \eqn{k}-clustering of the dataset.
 }
 \usage{
-cluster.optimal(data, nsim = 1000, aR = 0.4, p = 2, k = 2,
-	a = 2.01, b = 0.990099, tau2 = 1, keep = 4, mcs = 0.2,
-	file = "", label = "data")
+cluster.optimal(data, nsim = 100000, aR = 0.4, p = 2, k = 2,
+	a = 2.01, b = 0.990099, tau2 = 1, mcs = 0.1, 
+	file = "", label = "data", keep = 4)
 }
 \arguments{
   \item{data}{ \code{data} should be a matrix, even when the response is
@@ -64,11 +64,8 @@ marginal corresponding to those clusters. The latter values are kept as a means 
 the relative merit of the clusters in the table. }
 }
 \references{ 
-  Fuentes, C. and Casella, G. (2008) "Testing for the Existence of Clusters"
-  \url{http://www.stat.ufl.edu/~casella/Papers/paper-v3.pdf}
-
-  Gopal, V. "BayesClust User Manual"
-  \url{http://www.stat.ufl.edu/~viknesh/bayesclust/clust.html}
+  Fuentes, C. and Casella, G. (2009) Testing for the Existence of Clusters. 
+  \emph{SORT} \bold{33}(2)
 }
 \author{ Gopal, V. }
 \seealso{ \code{\link{plot.cluster.optimal}} to plot the clustered data.
@@ -78,7 +75,7 @@ the relative merit of the clusters in the table. }
 Y <- matrix(rnorm(24), nrow=12)
 
 # Search for optimal partitioning of data into 2 clusters
-search1 <- cluster.optimal(Y, p=2, keep=5)
+search1 <- cluster.optimal(Y, nsim=1000, p=2, k=4, keep=5)
 
 # Plot the best cluster found during search
 plot(search1)

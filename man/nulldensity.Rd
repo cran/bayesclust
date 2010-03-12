@@ -11,8 +11,8 @@ In testing the following the hypothesis,
 the Empirical Posterior Probability (EPP) under the null hypothesis.
 }
 \usage{
-nulldensity(nsim, n, k, mcs=0.2, a=2.01, b=0.990099,
-	tau2=1, prop=0.25, p, file="")
+nulldensity(nsim=8000, n, p = 2, k = 2, a=2.01, b=0.990099,
+	tau2=1, mcs = 0.1, prop=0.25, file="")
 }
 \arguments{
   \item{nsim}{ This denotes the number of random variables to generate
@@ -64,11 +64,8 @@ should match for the \eqn{p}-value conversion to proceed. }
 from the null distribution. }
 }
 \references{ 
-  Fuentes, C. and Casella, G. (2008) "Testing for the Existence of Clusters"
-  \url{http://www.stat.ufl.edu/~casella/Papers/paper-v3.pdf}
-
-  Gopal, V. "BayesClust User Manual"
-  \url{http://www.stat.ufl.edu/~viknesh/bayesclust/clust.html}
+  Fuentes, C. and Casella, G. (2009) Testing for the Existence of Clusters. 
+  \emph{SORT} \bold{33}(2)
 }
 \author{ Fuentes, C. and Gopal, V. }
 \seealso{

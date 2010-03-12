@@ -1,9 +1,9 @@
 ##########################################################################
 # Version 5.0.0 of Clustering Algorithm
-# Last edited Oct 09th 2008
+# Last edited Mar 07th 2010
 ##########################################################################
-cluster.optimal <- function(data, nsim=1000, aR=0.4, p=2, k=2, a=2.01, b=0.990099, tau2=1, keep=4,
-		mcs=0.2, file="", label="data") {
+cluster.optimal <- function(data, nsim=100000, aR=0.4, p=2, k=2, a=2.01, 
+  b=0.990099, tau2=1, mcs=0.1, file="", label="data", keep=4) {
 
 # Check arguments here ****************************************************
 	if((mcs>=1)||(mcs >= 1/k)) stop("mcs has to be a fraction between 0 and 1/k")

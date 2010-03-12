@@ -1,11 +1,13 @@
 Package: bayesclust
 Type: Package
 Title: Tests/Searches for significant clusters in genetic data.
-Version: 2.1
-Date: 2009-02-28
+Version: 3.0
+Date: 2010-03-12
 Author: Gopal, V. and Fuentes, C. and Casella, G.
 Maintainer: Gopal, V. <viknesh@stat.ufl.edu>
 Description: Bayes Clustering Package
 License: GPL-2
 LazyLoad: yes
-Packaged: Sun Mar  1 10:42:37 2009; viknesh
+Packaged: 2010-03-12 15:40:32 UTC; viknesh
+Repository: CRAN
+Date/Publication: 2010-03-13 14:54:58

@@ -11,8 +11,9 @@ null hypothesis in the following test:
 where \eqn{k} takes an integer value strictly greater than 1. 
 }
 \usage{
-cluster.test(data, nsim = 1000, aR = 0.4, p = 2, k = 2, 
-	a = 2.01, b = 0.990099, tau2 = 1, mcs=0.2, file = "", label = "data")
+cluster.test(data, nsim = 500000, aR = 0.4, p = 2, k = 2, 
+	a = 2.01, b = 0.990099, tau2 = 1, mcs=0.1, file = "", label = "data",
+        replications = 1)
 }
 \arguments{
   \item{data}{ \code{data} should be a matrix, even when the response is
@@ -46,6 +47,9 @@ subsequent R sessions using \code{load}. If left unspecified, the object will no
 be saved to a file and could be lost on quitting the R session. }
   \item{label}{ \code{label} serves to name the dataset in any given
 hypothesis test. }
+  \item{replications}{ \code{replications} will instruct the function to 
+perform multiple replications of the test, allowing the user to monitor 
+convergence of the estimates of the posterior probabilities. }
 }
 \details{
 Since the hypothesis test is carried out in a Bayesian framework, the
@@ -55,7 +59,8 @@ portions of \code{cluster.test} have been coded in C in order to speed up the si
 
 }
 \value{
-The output from this function is a list object consisting of three components. It will
+If \code{replications} is set to 1, then the output from this function is a 
+list object consisting of three components. It will
 be assigned S3 class ``cluster.test'', and can then serve as input to \code{plot}
 or \code{emp2pval}. The components of this list object are:
   \item{param}{ This component exists purely for bookkeeping purposes, in
@@ -74,27 +79,28 @@ The values that are kept correspond
 exactly to those in the preceding \code{iterations} component. When
 \code{summary.cluster.test} is called, the final posterior probability is extracted and
 printed in a readable format.}
+If \code{replications} is set to an integer greater than 1, then the object 
+returned is of S3 class ``cluster.test.reps''. This is just a list of 
+objects of class ``cluster.test''. This ``cluster.test.reps'' object can also 
+be fed directly into \code{emp2pval} and \code{plot}.
 }
 \references{ 
-  Fuentes, C. and Casella, G. (2008) "Testing for the Existence of Clusters"
-  \url{http://www.stat.ufl.edu/~casella/Papers/paper-v3.pdf}
-
-  Gopal, V. "BayesClust User Manual"
-  \url{http://www.stat.ufl.edu/~viknesh/bayesclust/clust.html}
+  Fuentes, C. and Casella, G. (2009) Testing for the Existence of Clusters. 
+  \emph{SORT} \bold{33}(2)
 }
 \author{ Gopal, V. }
-\seealso{ \code{\link{plot.cluster.test}} to monitor convergence of computation of
-posterior probability.
+\seealso{ \code{\link{plot.cluster.test}}, \code{\link{plot.cluster.test.reps}}
+ to monitor convergence of computation of posterior probability.
 
-\code{\link{summary.cluster.test}} to display the computed final posterior probabilities
-for each dataset run.
+\code{\link{summary.cluster.test}}, \code{\link{summary.cluster.test.reps}} to 
+display the computed final posterior probabilities for each dataset run.
 }
 \examples{
 # Generate random 2-variate data
 Y <- matrix(rnorm(24), nrow=12)
 
 # Search for optimal partitioning of data into 2 clusters
-test1 <- cluster.test(Y, p=2)
+test1 <- cluster.test(Y, nsim=1000, p=2, replications=3)
 
 # Plot the running posterior probabilities to monitor convergence
 plot(test1)

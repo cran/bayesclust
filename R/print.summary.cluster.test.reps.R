@@ -1,4 +1,4 @@
-print.summary.cluster.test <- function(x, ...) {
+print.summary.cluster.test.reps <- function(x, ...) {
   cat("\n")
   cat("Cluster test conducted on data object ", x$data.used, ", with ", x$iterations, 
     " iterations.\n", sep="")
@@ -8,9 +8,10 @@ print.summary.cluster.test <- function(x, ...) {
   cat("H1\t\t\t: k = ",x$null,"\n",sep="")
 
   cat("**************************************** \n")
-  cat("Final Empirical Posterior Probability: \n")
+  cat("Final Empirical Posterior Probabilities: \n")
   cat("**************************************** \n")
   print(x$probs)
   cat("\n")
-  cat("Please run emp2pval to obtain the corresponding P-values for the above statistics.\n")
+  cat("Please run emp2pval to obtain the corresponding P-values for the mean 
+    of the above statistics\n")
 }

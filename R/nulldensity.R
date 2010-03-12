@@ -1,6 +1,6 @@
 ##########################################################################
 # Version 3.0.0
-# Last edited Aug 30th 2008
+# Last edited Mar 7th 2010
 ##########################################################################
 # nsim	: number of simulations, i.e., number of posterior probabilities to generate
 # n 	: number of observations in dataset
@@ -13,8 +13,8 @@
 # file	: filename to save created R object to. The R object is saved,
 # 	  not a txt file.
 ##########################################################################
-nulldensity <- function(nsim, n, k, mcs=0.2, a=2.01, b=0.990099, 
-	tau2=1, prop=0.25, p, file=""){
+nulldensity <- function(nsim=8000, n, p=2, k=2, a=2.01, b=0.990099, 
+  tau2=1, mcs=0.1, prop=0.25, file="" ){
 
 # Check arguments here ****************************************************
 	if((mcs>=1)||(mcs >= 1/k)) stop("mcs has to be a fraction between 0 and 1/k")
