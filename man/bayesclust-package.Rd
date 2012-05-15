@@ -56,6 +56,10 @@ Maintainer: Vik Gopal <viknesh@stat.ufl.edu>
   Fuentes, C. and Casella, G. (2009) Testing for the Existence of Clusters. 
   \emph{SORT} \bold{33}(2)
 
+  Gopal, V. and Fuentes, C. and Casella, G. (2012) bayesclust: An R package 
+  for Testing and Searching for Significant Clusters.
+  \emph{Journal of Statistical Software} \bold{47}(14), 1-21.
+  \url{http://www.jstatsoft.org/v47/i14/}
 }
 \keyword{ package }
 \keyword{ htest }

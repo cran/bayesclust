@@ -1,0 +1,21 @@
+citHeader("To cite bayesclust in publications use:")
+
+citEntry(entry = "Article",
+  title        = "{bayesclust}: An {R} Package for Testing and Searching for Significant Clusters",
+  author       = personList(as.person("Vikneswaran Gopal"),
+                   as.person("Claudio Fuentes"),
+                   as.person("George Casella")),
+  journal      = "Journal of Statistical Software",
+  year         = "2012",
+  volume       = "47",
+  number       = "14",
+  pages        = "1--21",
+  url          = "http://www.jstatsoft.org/v47/i14/",
+
+  textVersion  =
+  paste("Vikneswaran Gopal, Claudio Fuentes, George Casella (2012).",
+        "bayesclust: An R Package for Testing and Searching for Significant Clusters.",
+        "Journal of Statistical Software, 47(14), 1-21.",
+        "URL http://www.jstatsoft.org/v47/i14/.")
+)
+
